@@ -9,3 +9,15 @@
 /out/*
 *.class
 *.iml
+
+nbproject/private/
+##############################
+## Visual Studio Code
+##############################
+.vscode/
+.code-workspace
+
+##############################
+## OS X
+##############################
+.DS_Store
