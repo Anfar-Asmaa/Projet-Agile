@@ -47,7 +47,7 @@ public class GameEngine extends GameCore
         
         // load resources
         drawer = new TileMapDrawer();
-        drawer.setBackground(mapLoader.loadImage("background.jpg"));
+        drawer.setBackground(mapLoader.loadImage("background3.png"));
         
         // load first map
         map = mapLoader.loadNextMap();
