@@ -51,7 +51,7 @@ public class Sprite {
     }
 
    
-    public int getWidth() 
+    public int getWidth()
     {
         return anim.getImage().getWidth(null);
     }

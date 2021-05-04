@@ -251,9 +251,24 @@ public class MapLoader
 
         Image[][] images = new Image[4][];
 
+        //1
+        Image[][] playerWalkImages = new Image[4][];
+
+        //2
+        playerWalkImages[0] = new Image[]{
+            loadImage("PlayerWalk/Chara_BlueWalk00000.png"),
+            loadImage("PlayerWalk/Chara_BlueWalk00001.png"),
+            loadImage("PlayerWalk/Chara_BlueWalk00002.png"),
+            loadImage("PlayerWalk/Chara_BlueWalk00003.png"),
+            loadImage("PlayerWalk/Chara_BlueWalk00004.png"),
+            loadImage("PlayerWalk/Chara_BlueWalk00005.png"),
+        };
+
+
+
         // load left-facing images
         images[0] = new Image[] {
-            loadImage("player.png"),         
+            loadImage("player.png"),
             loadImage("fly1.png"),
             loadImage("fly2.png"),
             loadImage("fly3.png"),
@@ -264,6 +279,11 @@ public class MapLoader
         images[1] = new Image[images[0].length];
         images[2] = new Image[images[0].length];
         images[3] = new Image[images[0].length];
+
+        //3
+        playerWalkImages[1] = new Image[playerWalkImages[0].length];
+        playerWalkImages[2] = new Image[playerWalkImages[0].length];
+        playerWalkImages[3] = new Image[playerWalkImages[0].length];
         
         for (int i=0; i<images[0].length; i++) 
         {
@@ -273,35 +293,59 @@ public class MapLoader
             images[2][i] = getFlippedImage(images[0][i]);
             // right-facing "dead" images
             images[3][i] = getFlippedImage(images[1][i]);
+
+            //4
+            // right-facing images
+            playerWalkImages[1][i] = getMirrorImage(playerWalkImages[0][i]);
+            // left-facing "dead" images
+            playerWalkImages[2][i] = getFlippedImage(playerWalkImages[0][i]);
+            // right-facing "dead" images
+            playerWalkImages[3][i] = getFlippedImage(playerWalkImages[1][i]);
         }
 
         // create creature animations
         Animation[] playerAnim = new Animation[4];
         Animation[] flyAnim = new Animation[4];
         Animation[] grubAnim = new Animation[4];
-        
+
+        //5
+        Animation[] playerWalkAnim = new Animation[4];
+
+
         for (int i=0; i<4; i++) 
         {
             playerAnim[i] = createPlayerAnim (images[i][0]);
-            flyAnim[i] = createFlyAnim (images[i][1], images[i][1], images[i][3]);
+            flyAnim[i] = createFlyAnim (images[i][1], images[i][2], images[i][3]);
             grubAnim[i] = createGrubAnim (images[i][4], images[i][5]);
+
+            //6
+            playerWalkAnim[i] = createPlayerWalkAnim(playerWalkImages[i]);
         }
 
         // create creature sprites
-        playerSprite = new Player (playerAnim[0], playerAnim[1],playerAnim[2], playerAnim[3]);
+        playerSprite = new Player (playerWalkAnim[0], playerWalkAnim[1],playerWalkAnim[2], playerWalkAnim[3]);
+
+       // playerSprite = new Player (playerAnim[0], playerAnim[1],playerAnim[2], playerAnim[3]);
         flySprite = new Fly (flyAnim[0], flyAnim[1],flyAnim[2], flyAnim[3]);
         grubSprite = new Grub (grubAnim[0], grubAnim[1],grubAnim[2], grubAnim[3]);
     }
 
 
-    private Animation createPlayerAnim(Image player)
+    private Animation createPlayerAnim(Image player1)
     {
         Animation anim = new Animation();
-        anim.addFrame(player, 250);
-     
+        anim.addFrame(player1, 250);
+
         return anim;
     }
 
+    //7
+    private Animation createPlayerWalkAnim( Image[] playerImages) {
+        Animation anim = new Animation();
+        for(int j = 0; j <6; j++)
+            anim.addFrame(playerImages[j], 150);
+        return anim;
+    }
 
     private Animation createFlyAnim(Image img1, Image img2, Image img3)
     {
@@ -332,7 +376,7 @@ public class MapLoader
 
         // create "star" sprite
         anim = new Animation();
-        anim.addFrame(loadImage("coin1.png"),250 ) ;  
+        anim.addFrame(loadImage("coin1.png"),250);
         anim.addFrame(loadImage("coin2.png"),250);
         anim.addFrame(loadImage("coin3.png"),250);
         anim.addFrame(loadImage("coin4.png"),250);
