@@ -257,11 +257,11 @@ public class MapLoader
         //2
         playerWalkImages[0] = new Image[]{
             loadImage("PlayerWalk/Chara_BlueWalk00000.png"),
-            loadImage("PlayerWalk/Chara_BlueWalk00001.png"),
-            loadImage("PlayerWalk/Chara_BlueWalk00002.png"),
             loadImage("PlayerWalk/Chara_BlueWalk00003.png"),
-            loadImage("PlayerWalk/Chara_BlueWalk00004.png"),
-            loadImage("PlayerWalk/Chara_BlueWalk00005.png"),
+            loadImage("PlayerWalk/Chara_BlueWalk00006.png"),
+            loadImage("PlayerWalk/Chara_BlueWalk00009.png"),
+            loadImage("PlayerWalk/Chara_BlueWalk00012.png"),
+            loadImage("PlayerWalk/Chara_BlueWalk00015.png"),
         };
 
 
@@ -295,8 +295,10 @@ public class MapLoader
             images[3][i] = getFlippedImage(images[1][i]);
 
             //4
+            //fixing left-right inversion for player
+            playerWalkImages[1][i] = playerWalkImages[0][i];
             // right-facing images
-            playerWalkImages[1][i] = getMirrorImage(playerWalkImages[0][i]);
+            playerWalkImages[0][i] = getMirrorImage(playerWalkImages[1][i]);
             // left-facing "dead" images
             playerWalkImages[2][i] = getFlippedImage(playerWalkImages[0][i]);
             // right-facing "dead" images
