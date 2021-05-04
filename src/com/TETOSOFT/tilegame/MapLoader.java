@@ -249,13 +249,12 @@ public class MapLoader
     public void loadCreatureSprites() 
     {
 
-        Image[][] images = new Image[4][];
+        Image[][] grubImages = new Image[4][];
+        Image[][] playerImages = new Image[4][];
+        Image[][] flyImages = new Image[4][];
 
-        //1
-        Image[][] playerWalkImages = new Image[4][];
 
-        //2
-        playerWalkImages[0] = new Image[]{
+        playerImages[0] = new Image[]{
             loadImage("PlayerWalk/Chara_BlueWalk00000.png"),
             loadImage("PlayerWalk/Chara_BlueWalk00003.png"),
             loadImage("PlayerWalk/Chara_BlueWalk00006.png"),
@@ -264,45 +263,62 @@ public class MapLoader
             loadImage("PlayerWalk/Chara_BlueWalk00015.png"),
         };
 
-
-
-        // load left-facing images
-        images[0] = new Image[] {
-            loadImage("player.png"),
-            loadImage("fly1.png"),
-            loadImage("fly2.png"),
-            loadImage("fly3.png"),
+        grubImages[0] = new Image[] {
             loadImage("grub1.png"),
             loadImage("grub2.png"),
+            loadImage("grub3.png"),
+            loadImage("grub4.png"),
         };
 
-        images[1] = new Image[images[0].length];
-        images[2] = new Image[images[0].length];
-        images[3] = new Image[images[0].length];
+        flyImages[0] = new Image[] {
+                loadImage("fly1.png"),
+                loadImage("fly2.png"),
+                loadImage("fly3.png"),
+        };
 
-        //3
-        playerWalkImages[1] = new Image[playerWalkImages[0].length];
-        playerWalkImages[2] = new Image[playerWalkImages[0].length];
-        playerWalkImages[3] = new Image[playerWalkImages[0].length];
-        
-        for (int i=0; i<images[0].length; i++) 
+        //initializing all images array
+        grubImages[1] = new Image[grubImages[0].length];
+        grubImages[2] = new Image[grubImages[0].length];
+        grubImages[3] = new Image[grubImages[0].length];
+
+        flyImages[1] = new Image[flyImages[0].length];
+        flyImages[2] = new Image[flyImages[0].length];
+        flyImages[3] = new Image[flyImages[0].length];
+
+        playerImages[1] = new Image[playerImages[0].length];
+        playerImages[2] = new Image[playerImages[0].length];
+        playerImages[3] = new Image[playerImages[0].length];
+
+
+        //populating all images arrays
+        for (int i=0; i<grubImages[0].length; i++) {
+            // right-facing images
+            grubImages[1][i] = getMirrorImage(grubImages[0][i]);
+            // left-facing "dead" images
+            grubImages[2][i] = getFlippedImage(grubImages[0][i]);
+            // right-facing "dead" images
+            grubImages[3][i] = getFlippedImage(grubImages[1][i]);
+        }
+
+        for (int i=0; i<flyImages[0].length; i++) {
+            // right-facing images
+            flyImages[1][i] = getMirrorImage(flyImages[0][i]);
+            // left-facing "dead" images
+            flyImages[2][i] = getFlippedImage(flyImages[0][i]);
+            // right-facing "dead" images
+            flyImages[3][i] = getFlippedImage(flyImages[1][i]);
+        }
+
+        for (int i=0; i<playerImages[0].length; i++)
         {
-            // right-facing images
-            images[1][i] = getMirrorImage(images[0][i]);
-            // left-facing "dead" images
-            images[2][i] = getFlippedImage(images[0][i]);
-            // right-facing "dead" images
-            images[3][i] = getFlippedImage(images[1][i]);
-
-            //4
             //fixing left-right inversion for player
-            playerWalkImages[1][i] = playerWalkImages[0][i];
+            playerImages[1][i] = playerImages[0][i];
             // right-facing images
-            playerWalkImages[0][i] = getMirrorImage(playerWalkImages[1][i]);
+            playerImages[0][i] = getMirrorImage(playerImages[1][i]);
             // left-facing "dead" images
-            playerWalkImages[2][i] = getFlippedImage(playerWalkImages[0][i]);
+            playerImages[2][i] = getFlippedImage(playerImages[0][i]);
             // right-facing "dead" images
-            playerWalkImages[3][i] = getFlippedImage(playerWalkImages[1][i]);
+            playerImages[3][i] = getFlippedImage(playerImages[1][i]);
         }
 
         // create creature animations
@@ -316,21 +332,18 @@ public class MapLoader
 
         for (int i=0; i<4; i++) 
         {
-            playerAnim[i] = createPlayerAnim (images[i][0]);
-            flyAnim[i] = createFlyAnim (images[i][1], images[i][2], images[i][3]);
-            grubAnim[i] = createGrubAnim (images[i][4], images[i][5]);
+            flyAnim[i] = createFlyAnim (flyImages[i][0], flyImages[i][1], flyImages[i][2]);
+            grubAnim[i] = createGrubAnim (grubImages[i][0], grubImages[i][1], grubImages[i][2], grubImages[i][3]);
 
-            //6
-            playerWalkAnim[i] = createPlayerWalkAnim(playerWalkImages[i]);
+            playerWalkAnim[i] = createPlayerWalkAnim(playerImages[i]);
         }
 
         // create creature sprites
-        playerSprite = new Player (playerWalkAnim[0], playerWalkAnim[1],playerWalkAnim[2], playerWalkAnim[3]);
-
-       // playerSprite = new Player (playerAnim[0], playerAnim[1],playerAnim[2], playerAnim[3]);
         flySprite = new Fly (flyAnim[0], flyAnim[1],flyAnim[2], flyAnim[3]);
         grubSprite = new Grub (grubAnim[0], grubAnim[1],grubAnim[2], grubAnim[3]);
-    }
+        playerSprite = new Player (playerWalkAnim[0], playerWalkAnim[1],playerWalkAnim[2], playerWalkAnim[3]);
+
+     }
 
 
     private Animation createPlayerAnim(Image player1)
@@ -360,11 +373,13 @@ public class MapLoader
     }
 
 
-    private Animation createGrubAnim(Image img1, Image img2)
+    private Animation createGrubAnim(Image img1, Image img2, Image img3, Image img4)
     {
         Animation anim = new Animation();
         anim.addFrame(img1, 250);
         anim.addFrame(img2, 250);
+        anim.addFrame(img3, 250);
+        anim.addFrame(img4, 250);
         return anim;
     }
 
