@@ -1,6 +1,6 @@
 package com.TETOSOFT.tilegame;
 
-import java.awt.*;
+import java.awt.*; 
 import java.awt.event.KeyEvent;
 import java.util.Iterator;
 
@@ -8,6 +8,7 @@ import com.TETOSOFT.graphics.*;
 import com.TETOSOFT.input.*;
 import com.TETOSOFT.test.GameCore;
 import com.TETOSOFT.tilegame.sprites.*;
+import com.TETOSOFT.input.*;
 
 /**
  * GameManager manages all parts of the game.
@@ -47,8 +48,28 @@ public class GameEngine extends GameCore
         
         // load resources
         drawer = new TileMapDrawer();
+        
+        drawer.setBackground(mapLoader.loadImage("play/menu.png"));
 
+        
+        // load first map
+        map = mapLoader.loadNextMap();
+    }
+    public void init2()
+    {
+        super.init();
+        
+        // set up input manager
+        initInput();
+        
+        // start resource manager
+        mapLoader = new MapLoader(screen.getFullScreenWindow().getGraphicsConfiguration());
+        
+        // load resources
+        drawer = new TileMapDrawer();
+        
         drawer.setBackground(mapLoader.loadImage("background.png"));
+
         
         // load first map
         map = mapLoader.loadNextMap();
@@ -71,7 +92,7 @@ public class GameEngine extends GameCore
         exit = new GameAction("exit",GameAction.DETECT_INITAL_PRESS_ONLY);
         
         inputManager = new InputManager(screen.getFullScreenWindow());
-        inputManager.setCursor(InputManager.INVISIBLE_CURSOR);
+        //inputManager.setCursor(InputManager.INVISIBLE_CURSOR);
         
         inputManager.mapToKey(moveLeft, KeyEvent.VK_LEFT);
         inputManager.mapToKey(moveRight, KeyEvent.VK_RIGHT);
@@ -109,7 +130,8 @@ public class GameEngine extends GameCore
     
     public void draw(Graphics2D g) {
         
-        drawer.draw(g, map, screen.getWidth(), screen.getHeight());
+        //drawer.draw(g, map, screen.getWidth(), screen.getHeight());
+        drawer.drawMenu(g, map, screen.getWidth(), screen.getHeight());
         g.setColor(Color.WHITE);
         g.drawString("Press ESC for EXIT.",10.0f,20.0f);
         g.setColor(Color.GREEN);
