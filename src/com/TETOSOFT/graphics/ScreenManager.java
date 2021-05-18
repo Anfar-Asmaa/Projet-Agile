@@ -75,7 +75,7 @@ public class ScreenManager
     }
 
 
-    public void setFullScreen(DisplayMode displayMode) 
+    public JFrame setFullScreen(DisplayMode displayMode) 
     {
         final JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -112,7 +112,7 @@ public class ScreenManager
         {
             // ignore
         }
-
+        return frame;
 
     }
 

@@ -3,6 +3,7 @@ package com.TETOSOFT.tilegame;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.Iterator;
+import java.util.concurrent.TimeUnit;
 
 import com.TETOSOFT.graphics.*;
 import com.TETOSOFT.input.*;
@@ -47,22 +48,27 @@ public class GameEngine extends GameCore
         
         // load resources
         drawer = new TileMapDrawer();
-
-        drawer.setBackground(mapLoader.loadImage("background.png"));
         
-        // load first map
-        map = mapLoader.loadNextMap();
+        menu("play/menu.png");
+        
     }
     
     
     /**
-     * Closes any resurces used by the GameManager.
+     * Closes any resources used by the GameManager.
      */
     public void stop() {
         super.stop();
         
     }
     
+    public void menu(String menuImgPath) {
+    	drawer.setBackground(mapLoader.loadImage("play/menu.png"));
+        
+        // load first map
+        map = mapLoader.loadNextMap();
+        
+    }
     
     private void initInput() {
         moveLeft = new GameAction("moveLeft");
@@ -71,7 +77,9 @@ public class GameEngine extends GameCore
         exit = new GameAction("exit",GameAction.DETECT_INITAL_PRESS_ONLY);
         
         inputManager = new InputManager(screen.getFullScreenWindow());
-        inputManager.setCursor(InputManager.INVISIBLE_CURSOR);
+        
+        //We need to show the cursor
+        //inputManager.setCursor(InputManager.INVISIBLE_CURSOR);
         
         inputManager.mapToKey(moveLeft, KeyEvent.VK_LEFT);
         inputManager.mapToKey(moveRight, KeyEvent.VK_RIGHT);
@@ -108,17 +116,32 @@ public class GameEngine extends GameCore
     
     
     public void draw(Graphics2D g) {
+        if(!isRunning) {
+        	drawer.drawMenu(g, map, screen.getWidth(), screen.getHeight());
+        }
+        else {
+        	drawer.draw(g, map, screen.getWidth(), screen.getHeight());
+            g.setColor(Color.WHITE);
+            g.drawString("Press ESC for EXIT.",10.0f,20.0f);
+            g.setColor(Color.GREEN);
+            g.drawString("Coins: "+collectedStars,300.0f,20.0f);
+            g.setColor(Color.YELLOW);
+            g.drawString("Lives: "+(numLives),500.0f,20.0f );
+            g.setColor(Color.WHITE);
+            g.drawString("Home: "+mapLoader.currentMap,700.0f,20.0f);
+        }
         
-        drawer.draw(g, map, screen.getWidth(), screen.getHeight());
-        g.setColor(Color.WHITE);
-        g.drawString("Press ESC for EXIT.",10.0f,20.0f);
-        g.setColor(Color.GREEN);
-        g.drawString("Coins: "+collectedStars,300.0f,20.0f);
-        g.setColor(Color.YELLOW);
-        g.drawString("Lives: "+(numLives),500.0f,20.0f );
-        g.setColor(Color.WHITE);
-        g.drawString("Home: "+mapLoader.currentMap,700.0f,20.0f);
-        
+    }
+    
+    public void startGame() {
+    	//drawer = new TileMapDrawer();
+    	System.out.println("HEEEEEEEEEEEEEEERE");
+    	drawer.setBackground(mapLoader.loadImage("play/play.png"));
+    	startButtonLoop();
+    	
+    	isRunning = true;
+    	drawer.setBackground(mapLoader.loadImage("background.png"));
+    	gameLoop();
     }
     
     

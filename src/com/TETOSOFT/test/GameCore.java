@@ -1,9 +1,20 @@
 package com.TETOSOFT.test;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+
+import javax.imageio.ImageIO;
+import javax.print.DocFlavor.URL;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 
 import com.TETOSOFT.graphics.ScreenManager;
+import com.TETOSOFT.input.InputManager;
+import com.TETOSOFT.tilegame.TileMapDrawer;
 
 /**
     Simple abstract class used for testing. Subclasses should
@@ -25,8 +36,11 @@ public abstract class GameCore {
         new DisplayMode(1024, 768, 24, 0),
     };
 
-    private boolean isRunning;
+    protected boolean isRunning;
+    public static boolean menuRunning;
     protected ScreenManager screen;
+    protected JFrame frame;
+    private TileMapDrawer drawer;
 
 
     /**
@@ -43,7 +57,7 @@ public abstract class GameCore {
     public void run() {
         try {
             init();
-            gameLoop();
+            menuLoop();
         }
         finally {
             screen.restoreScreen();
@@ -84,29 +98,94 @@ public abstract class GameCore {
         screen = new ScreenManager();
         DisplayMode displayMode =
         screen.findFirstCompatibleMode(POSSIBLE_MODES);
-        screen.setFullScreen(displayMode);
+        frame =screen.setFullScreen(displayMode);
 
         Window window = screen.getFullScreenWindow();
         window.setFont(new Font("Dialog", Font.PLAIN, FONT_SIZE));
+		
+        
         window.setBackground(Color.BLACK);
         window.setForeground(Color.WHITE);
-
-        isRunning = true;
+        
+        menuRunning = true;
+        //isRunning = true;
     }
 
 
     public Image loadImage(String fileName) {
         return new ImageIcon(fileName).getImage();
     }
+    
+    /**
+	    Runs through the menu loop until clicked on play or quit.
+	*/
+    public void menuLoop() {
 
+    	long startTime = System.currentTimeMillis();
+        long currTime = startTime;
+
+        while (menuRunning) {
+            long elapsedTime =
+                System.currentTimeMillis() - currTime;
+            currTime += elapsedTime;
+
+            // update
+            update(elapsedTime);
+
+            // draw the screen
+            Graphics2D g = screen.getGraphics();
+            draw(g);
+            g.dispose();
+            screen.update();
+            
+            
+            // don't take a nap! run as fast as possible
+            /*try {
+                Thread.sleep(20);
+            }
+            catch (InterruptedException ex) { }*/
+        }
+        
+        startGame();
+
+        
+    }
+    
+    public void startButtonLoop() {
+    	long startTime = System.currentTimeMillis();
+        long currTime = startTime;
+
+        long elapsedTime =
+            System.currentTimeMillis() - currTime;
+        currTime += elapsedTime;
+
+        // update
+        update(elapsedTime);
+
+        // draw the screen
+        Graphics2D g = screen.getGraphics();
+        draw(g);
+        g.dispose();
+        screen.update();
+        
+        try {
+			TimeUnit.SECONDS.sleep((long) 0.7);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+      
+    
+    }
+    
 
     /**
         Runs through the game loop until stop() is called.
     */
+    
     public void gameLoop() {
         long startTime = System.currentTimeMillis();
         long currTime = startTime;
-
         while (isRunning) {
             long elapsedTime =
                 System.currentTimeMillis() - currTime;
@@ -144,4 +223,5 @@ public abstract class GameCore {
         method.
     */
     public abstract void draw(Graphics2D g);
+    public abstract void startGame();
 }

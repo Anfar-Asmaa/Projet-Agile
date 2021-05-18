@@ -71,7 +71,47 @@ public class TileMapDrawer
     public void setBackground(Image background) {
         this.background = background;
     }
+    
+    
+    /**
+	    Draws the Menu.
+	*/
+    public void drawMenu(Graphics2D g, TileMap map,
+            int screenWidth, int screenHeight)
+        {
+            Sprite player = map.getPlayer();
+            int mapWidth = tilesToPixels(map.getWidth());
 
+            // get the scrolling position of the map
+            // based on player's position
+            int offsetX = screenWidth / 2 -
+                Math.round(player.getX()) - TILE_SIZE;
+            offsetX = Math.min(offsetX, 0);
+            offsetX = Math.max(offsetX, screenWidth - mapWidth);
+
+            // get the y offset to draw all sprites and tiles
+            int offsetY = screenHeight -
+                tilesToPixels(map.getHeight());
+
+            // draw black background, if needed
+            if (background == null ||
+                screenHeight > background.getHeight(null))
+            {
+                g.setColor(Color.black);
+                g.fillRect(0, 0, screenWidth, screenHeight);
+            }
+
+            // draw parallax background image
+            if (background != null) {
+                int x = offsetX *
+                    (screenWidth - background.getWidth(null)) /
+                    (screenWidth - mapWidth);
+                int y = screenHeight - background.getHeight(null);
+
+                g.drawImage(background, x, y, null);
+            
+            }
+        }
 
     /**
         Draws the specified TileMap.
