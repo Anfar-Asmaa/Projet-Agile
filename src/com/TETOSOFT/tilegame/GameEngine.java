@@ -2,8 +2,13 @@ package com.TETOSOFT.tilegame;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 
 import com.TETOSOFT.graphics.*;
 import com.TETOSOFT.input.*;
@@ -35,6 +40,7 @@ public class GameEngine extends GameCore
     private GameAction exit;
     private int collectedStars=0;
     private int numLives=6;
+    private Clip jumpCoins,fail;
    
     public void init()
     {
@@ -50,6 +56,22 @@ public class GameEngine extends GameCore
         drawer = new TileMapDrawer();
         
         menu("play/menu.png");
+        
+     // load sounds effect 
+        try{
+        	//Coins
+			File music_jumpCoin= new File("jump-coin.wav");
+			AudioInputStream audioInput= AudioSystem.getAudioInputStream(music_jumpCoin);
+			jumpCoins = AudioSystem.getClip();
+			jumpCoins.open(audioInput);
+			// Fast game over
+			File music_fail= new File("fail.wav");
+			AudioInputStream audioInput2= AudioSystem.getAudioInputStream(music_fail);
+			fail = AudioSystem.getClip();
+			fail.open(audioInput2);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
         
     }
     
@@ -372,6 +394,13 @@ public class GameEngine extends GameCore
                 // player dies!
                 player.setState(Creature.STATE_DYING);
                 numLives--;
+                try{
+                	fail.start();
+                    fail.loop(1);
+        		}
+        		catch(Exception ex){
+        			ex.printStackTrace();
+        		}
                 if(numLives==0) {
                     try {
                         Thread.sleep(3000);
@@ -401,7 +430,14 @@ public class GameEngine extends GameCore
                 numLives++;
                 collectedStars=0;
             }
-            
+            try{
+            	jumpCoins.start();
+            	jumpCoins.loop(1);
+    			
+    		}
+    		catch(Exception ex){
+    			ex.printStackTrace();
+    		}
         } else if (powerUp instanceof PowerUp.Music) {
             // change the music
             
