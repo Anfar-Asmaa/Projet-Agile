@@ -1,6 +1,6 @@
 package com.TETOSOFT.tilegame;
 
-import java.awt.*; 
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
@@ -9,7 +9,6 @@ import com.TETOSOFT.graphics.*;
 import com.TETOSOFT.input.*;
 import com.TETOSOFT.test.GameCore;
 import com.TETOSOFT.tilegame.sprites.*;
-import com.TETOSOFT.input.*;
 
 /**
  * GameManager manages all parts of the game.
@@ -49,31 +48,6 @@ public class GameEngine extends GameCore
         
         // load resources
         drawer = new TileMapDrawer();
-<<<<<<< HEAD
-=======
-        
-        drawer.setBackground(mapLoader.loadImage("play/menu.png"));
-
-        
-        // load first map
-        map = mapLoader.loadNextMap();
-    }
-    public void init2()
-    {
-        super.init();
-        
-        // set up input manager
-        initInput();
-        
-        // start resource manager
-        mapLoader = new MapLoader(screen.getFullScreenWindow().getGraphicsConfiguration());
-        
-        // load resources
-        drawer = new TileMapDrawer();
-        
-        drawer.setBackground(mapLoader.loadImage("background.png"));
-
->>>>>>> cf8668532fb7d7d5b239d08b0951a3a32a041b5c
         
         menu("play/menu.png");
         
@@ -103,11 +77,8 @@ public class GameEngine extends GameCore
         exit = new GameAction("exit",GameAction.DETECT_INITAL_PRESS_ONLY);
         
         inputManager = new InputManager(screen.getFullScreenWindow());
-<<<<<<< HEAD
         
         //We need to show the cursor
-=======
->>>>>>> cf8668532fb7d7d5b239d08b0951a3a32a041b5c
         //inputManager.setCursor(InputManager.INVISIBLE_CURSOR);
         
         inputManager.mapToKey(moveLeft, KeyEvent.VK_LEFT);
@@ -160,7 +131,6 @@ public class GameEngine extends GameCore
             g.drawString("Home: "+mapLoader.currentMap,700.0f,20.0f);
         }
         
-<<<<<<< HEAD
     }
     
     public void startGame() {
@@ -172,19 +142,6 @@ public class GameEngine extends GameCore
     	isRunning = true;
     	drawer.setBackground(mapLoader.loadImage("background.png"));
     	gameLoop();
-=======
-        //drawer.draw(g, map, screen.getWidth(), screen.getHeight());
-        drawer.drawMenu(g, map, screen.getWidth(), screen.getHeight());
-        g.setColor(Color.WHITE);
-        g.drawString("Press ESC for EXIT.",10.0f,20.0f);
-        g.setColor(Color.GREEN);
-        g.drawString("Coins: "+collectedStars,300.0f,20.0f);
-        g.setColor(Color.YELLOW);
-        g.drawString("Lives: "+(numLives),500.0f,20.0f );
-        g.setColor(Color.WHITE);
-        g.drawString("Home: "+mapLoader.currentMap,700.0f,20.0f);
-        
->>>>>>> cf8668532fb7d7d5b239d08b0951a3a32a041b5c
     }
     
     

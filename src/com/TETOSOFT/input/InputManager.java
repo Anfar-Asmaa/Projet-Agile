@@ -290,7 +290,6 @@ public class InputManager implements KeyListener, MouseListener,
 
     // from the MouseListener interface
     public void mouseClicked(MouseEvent e) {
-<<<<<<< HEAD
     	
     	int x = e.getX();
         int y = e.getY();
@@ -300,20 +299,6 @@ public class InputManager implements KeyListener, MouseListener,
         	GameCore.menuRunning = false;
         }
     }
-=======
-        int x = e.getX();
-        int y = e.getY();
-        System.out.println(x + "," + y);
-        if(x>211 && x<492 && y>92 && y<207) {
-        	System.out.println("play");
-        }
-        else System.out.println("out");
-        if(x>351 && x<433 && y>275 && y<304) {
-        	System.out.println("quit");
-        }
-        else System.out.println("out");
-    };
->>>>>>> cf8668532fb7d7d5b239d08b0951a3a32a041b5c
 
 
     // from the MouseListener interface
