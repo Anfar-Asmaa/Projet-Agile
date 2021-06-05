@@ -160,7 +160,6 @@ is divided into following sections:
                         <path path="@{classpath}"/>
                     </classpath>
                     <compilerarg line="${javac.compilerargs} ${javac.compilerargs.jaxws}"/>
-                    <customize/>
                 </javac>
             </sequential>
         </macrodef>
@@ -465,6 +464,7 @@ is divided into following sections:
                 JAVADOC SECTION
                 ===============
             -->
+
     <target depends="init" name="-javadoc-build">
         <mkdir dir="${dist.javadoc.dir}"/>
         <javadoc additionalparam="${javadoc.additionalparam}" author="${javadoc.author}" charset="UTF-8" destdir="${dist.javadoc.dir}" docencoding="UTF-8" encoding="${javadoc.encoding.used}" failonerror="true" noindex="${javadoc.noindex}" nonavbar="${javadoc.nonavbar}" notree="${javadoc.notree}" private="${javadoc.private}" source="${javac.source}" splitindex="${javadoc.splitindex}" use="${javadoc.use}" useexternalfile="true" version="${javadoc.version}" windowtitle="${javadoc.windowtitle}">
@@ -485,6 +485,7 @@ is divided into following sections:
                 JUNIT COMPILATION SECTION
                 =========================
             -->
+
     <target depends="init,compile" if="have.tests" name="-pre-pre-compile-test">
         <mkdir dir="${build.test.classes.dir}"/>
     </target>
