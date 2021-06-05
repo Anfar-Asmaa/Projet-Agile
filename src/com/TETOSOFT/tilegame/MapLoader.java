@@ -368,7 +368,7 @@ public class MapLoader
     {
         Animation anim = new Animation();
         for(int j = 0; j <5; j++)
-            anim.addFrame(flyImages[j], 150);
+            anim.addFrame(flyImages[j], 250);
 
         return anim;
     }
