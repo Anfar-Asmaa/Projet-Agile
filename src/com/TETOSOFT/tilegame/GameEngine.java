@@ -164,8 +164,8 @@ public class GameEngine extends GameCore
     
     public void startGame() {
     	
-    	drawer.setBackground(mapLoader.loadImage("play/play.png"));
-    	startButtonLoop();
+    	/*drawer.setBackground(mapLoader.loadImage("play/play.png"));
+    	startButtonLoop();*/
     	
     	isRunning = true;
     	drawer.setBackground(mapLoader.loadImage("background.png"));

@@ -295,21 +295,23 @@ public class InputManager implements KeyListener, MouseListener,
         int y = e.getY();
         System.out.println(x+","+y);
         
-        if(x >= 211 && x <= 492 && y >= 92 && y <= 207 && !GameCore.restartMenu) {
+        // Handle Main Menu Clicks
+        if(x >= 125 && x <= 638 && y >= 27 && y <= 217 && !GameCore.restartMenu) {
         	System.out.println(x+","+y);
         	GameCore.menuRunning = false;
         }
-        if(x >= 350 && x <= 435 && y >= 276 && y <= 307 && !GameCore.restartMenu) {
-        	System.out.println(x+","+y);
+        if(x >= 198 && x <= 558 && y >= 265 && y <= 384 && !GameCore.restartMenu) {
+        	//System.out.println(x+","+y);
         	GameCore.lazilyExit();
         }
         
+        // Handle Restart Menu Clicks
         if(x >= 275 && x <= 525 && y >= 60 && y <= 159 && GameCore.restartMenu) {
-        	System.out.println(x+","+y);
+        	//System.out.println(x+","+y);
         	GameCore.menuRunning = false;
         }
         if(x >= 275 && x <= 525 && y >= 203 && y <= 301 && GameCore.restartMenu) {
-        	System.out.println(x+","+y);
+        	//System.out.println(x+","+y);
         	GameCore.lazilyExit();
         }
     }
@@ -355,6 +357,36 @@ public class InputManager implements KeyListener, MouseListener,
 
         mouseLocation.x = e.getX();
         mouseLocation.y = e.getY();
+        
+     // Handle Main Menu hovers
+        if(mouseLocation.x >= 211 && mouseLocation.x <= 492 && mouseLocation.y >= 92 && mouseLocation.y <= 207 && !GameCore.restartMenu) {
+        	GameCore.hoveredPlay = true;
+        }
+        if((mouseLocation.x <= 125 || mouseLocation.x >= 638 || mouseLocation.y <= 27 || mouseLocation.y >= 217) && !GameCore.restartMenu) {
+        	GameCore.hoveredPlay = false;
+        }
+        
+        if(mouseLocation.x >= 350 && mouseLocation.x <= 435 && mouseLocation.y >= 276 && mouseLocation.y <= 307 && !GameCore.restartMenu) {
+        	GameCore.hoveredQuit = true;
+        }
+        if((mouseLocation.x <= 198 || mouseLocation.x >= 558 || mouseLocation.y <= 265 || mouseLocation.y >= 384) && !GameCore.restartMenu) {
+        	GameCore.hoveredQuit = false;
+        }
+        
+        // Handle Restart Menu hovers
+        if(mouseLocation.x >= 275 && mouseLocation.x <= 525 && mouseLocation.y >= 60 && mouseLocation.y <= 159 && GameCore.restartMenu) {
+        	GameCore.hoveredPlayRestart = true;
+        }
+        if((mouseLocation.x <= 275 || mouseLocation.x >= 525 || mouseLocation.y <= 60 || mouseLocation.y >= 159) && GameCore.restartMenu) {
+        	GameCore.hoveredPlayRestart = false;
+        }
+       
+        if(mouseLocation.x >= 275 && mouseLocation.x <= 525 && mouseLocation.y >= 203 && mouseLocation.y <= 301 && GameCore.restartMenu) {
+        	GameCore.hoveredQuitRestart = true;
+        }
+        if((mouseLocation.x <= 275 || mouseLocation.x >= 525 || mouseLocation.y <= 203 || mouseLocation.y >= 301) && GameCore.restartMenu) {
+        	GameCore.hoveredQuitRestart = false;
+        }
 
     }
 

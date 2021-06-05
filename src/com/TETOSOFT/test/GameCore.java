@@ -39,6 +39,11 @@ public abstract class GameCore {
     protected boolean isRunning;
     public static boolean menuRunning;
     public static boolean restartMenu = false;
+    public static boolean hoveredPlay = false;
+    public static boolean hoveredQuit = false;
+    public static boolean hoveredPlayRestart = false;
+    public static boolean hoveredQuitRestart = false;
+
     protected ScreenManager screen;
     protected JFrame frame;
     private TileMapDrawer drawer;
@@ -126,33 +131,132 @@ public abstract class GameCore {
         long currTime = startTime;
 
         while (menuRunning) {
-            long elapsedTime =
-                System.currentTimeMillis() - currTime;
-            currTime += elapsedTime;
+        	while(!hoveredPlay && !hoveredQuit && !restartMenu) {
+        		menu("play/menu.png");
+        		long elapsedTime =
+                    System.currentTimeMillis() - currTime;
+                currTime += elapsedTime;
 
-            // update
-            update(elapsedTime);
+                // update
+                update(elapsedTime);
 
-            // draw the screen
-            Graphics2D g = screen.getGraphics();
-            draw(g);
-            g.dispose();
-            screen.update();
+                // draw the screen
+                Graphics2D g = screen.getGraphics();
+                draw(g);
+                g.dispose();
+                screen.update();
+                
+        	}
             
+            while(hoveredPlay && !restartMenu) {
+        		menu("play/play.png");
+        		long elapsedTime =
+                    System.currentTimeMillis() - currTime;
+                currTime += elapsedTime;
+
+                // update
+                update(elapsedTime);
+
+                // draw the screen
+                Graphics2D g = screen.getGraphics();
+                draw(g);
+                g.dispose();
+                screen.update();
+                
+                if(!menuRunning) {
+                	break;
+                }
+                
+                // don't take a nap! run as fast as possible
+                /*try {
+                    Thread.sleep(20);
+                }
+                catch (InterruptedException ex) { }*/
+        	}
             
-            // don't take a nap! run as fast as possible
-            /*try {
-                Thread.sleep(20);
-            }
-            catch (InterruptedException ex) { }*/
+            while(hoveredQuit && !restartMenu) {
+        		menu("play/quit.png");
+        		long elapsedTime =
+                    System.currentTimeMillis() - currTime;
+                currTime += elapsedTime;
+
+                // update
+                update(elapsedTime);
+
+                // draw the screen
+                Graphics2D g = screen.getGraphics();
+                draw(g);
+                g.dispose();
+                screen.update();
+                
+        	}
+            while(!hoveredPlayRestart && !hoveredQuitRestart && restartMenu) {
+        		menu("play/paused.png");
+        		long elapsedTime =
+                    System.currentTimeMillis() - currTime;
+                currTime += elapsedTime;
+
+                // update
+                update(elapsedTime);
+
+                // draw the screen
+                Graphics2D g = screen.getGraphics();
+                draw(g);
+                g.dispose();
+                screen.update();
+                
+        	}
+            
+            while(hoveredPlayRestart && restartMenu) {
+        		menu("play/resume.png");
+        		long elapsedTime =
+                    System.currentTimeMillis() - currTime;
+                currTime += elapsedTime;
+
+                // update
+                update(elapsedTime);
+
+                // draw the screen
+                Graphics2D g = screen.getGraphics();
+                draw(g);
+                g.dispose();
+                screen.update();
+                
+                if(!menuRunning) {
+                	break;
+                }
+                
+        	}
+            
+            while(hoveredQuitRestart && restartMenu) {
+        		menu("play/quitGame.png");
+        		long elapsedTime =
+                    System.currentTimeMillis() - currTime;
+                currTime += elapsedTime;
+
+                // update
+                update(elapsedTime);
+
+                // draw the screen
+                Graphics2D g = screen.getGraphics();
+                draw(g);
+                g.dispose();
+                screen.update();
+                
+                if(!menuRunning) {
+                	break;
+                }
+                
+        	}
+            
         }
         
         startGame();
 
         
     }
-    
-    public void startButtonLoop() {
+
+	/*public void startButtonLoop() {
     	long startTime = System.currentTimeMillis();
         long currTime = startTime;
 
@@ -177,7 +281,7 @@ public abstract class GameCore {
 		}
       
     
-    }
+    }*/
     
 
     /**
@@ -226,4 +330,5 @@ public abstract class GameCore {
     public abstract void draw(Graphics2D g);
     public abstract void startGame();
     public abstract void restartMenu();
+    public abstract void menu(String menuImgPath);
 }
