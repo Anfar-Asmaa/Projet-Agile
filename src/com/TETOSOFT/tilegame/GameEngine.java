@@ -63,11 +63,18 @@ public class GameEngine extends GameCore
     }
     
     public void menu(String menuImgPath) {
-    	drawer.setBackground(mapLoader.loadImage("play/menu.png"));
+    	drawer.setBackground(mapLoader.loadImage(menuImgPath));
         
         // load first map
-        map = mapLoader.loadNextMap();
+        map = mapLoader.loadFirstMap();
         
+    }
+    
+    public void restartMenu(){
+    	menu("play/paused.png");
+    	menuRunning = true;
+    	restartMenu = true;
+    	menuLoop();
     }
     
     private void initInput() {
@@ -134,13 +141,15 @@ public class GameEngine extends GameCore
     }
     
     public void startGame() {
-    	//drawer = new TileMapDrawer();
-    	System.out.println("HEEEEEEEEEEEEEEERE");
+    	
     	drawer.setBackground(mapLoader.loadImage("play/play.png"));
     	startButtonLoop();
     	
     	isRunning = true;
     	drawer.setBackground(mapLoader.loadImage("background.png"));
+    	
+    	numLives = 6;
+    	collectedStars = 0;
     	gameLoop();
     }
     

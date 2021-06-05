@@ -87,6 +87,18 @@ public class MapLoader
 
         return newImage;
     }
+    
+    public TileMap loadFirstMap() {
+    	try {
+    		currentMap = 1;
+            return loadMap(
+                "maps/map1.txt");
+        }
+        catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
 
 
     public TileMap loadNextMap() 

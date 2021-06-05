@@ -26,18 +26,19 @@ public abstract class GameCore {
 
     private static final DisplayMode POSSIBLE_MODES[] = {
         new DisplayMode(800, 600, 32, 0),
-        new DisplayMode(800, 600, 16, 0),
+        /*new DisplayMode(800, 600, 16, 0),
         new DisplayMode(800, 600, 24, 0),
         new DisplayMode(640, 480, 16, 0),
         new DisplayMode(640, 480, 32, 0),
         new DisplayMode(640, 480, 24, 0),
         new DisplayMode(1024, 768, 16, 0),
         new DisplayMode(1024, 768, 32, 0),
-        new DisplayMode(1024, 768, 24, 0),
+        new DisplayMode(1024, 768, 24, 0),*/
     };
 
     protected boolean isRunning;
     public static boolean menuRunning;
+    public static boolean restartMenu = false;
     protected ScreenManager screen;
     protected JFrame frame;
     private TileMapDrawer drawer;
@@ -73,7 +74,7 @@ public abstract class GameCore {
         System.exit(0) is only called if neccesary. It's neccesary
         if the Java Sound system is running.
     */
-    public void lazilyExit() {
+    public static void lazilyExit() {
         Thread thread = new Thread() {
             public void run() {
                 // first, wait for the VM exit on its own.
@@ -98,7 +99,7 @@ public abstract class GameCore {
         screen = new ScreenManager();
         DisplayMode displayMode =
         screen.findFirstCompatibleMode(POSSIBLE_MODES);
-        frame =screen.setFullScreen(displayMode);
+        frame = screen.setFullScreen(displayMode);
 
         Window window = screen.getFullScreenWindow();
         window.setFont(new Font("Dialog", Font.PLAIN, FONT_SIZE));
@@ -206,8 +207,8 @@ public abstract class GameCore {
             }
             catch (InterruptedException ex) { }*/
         }
+        restartMenu();
     }
-
 
     /**
         Updates the state of the game/animation based on the
@@ -224,4 +225,5 @@ public abstract class GameCore {
     */
     public abstract void draw(Graphics2D g);
     public abstract void startGame();
+    public abstract void restartMenu();
 }

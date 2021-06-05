@@ -293,10 +293,24 @@ public class InputManager implements KeyListener, MouseListener,
     	
     	int x = e.getX();
         int y = e.getY();
+        System.out.println(x+","+y);
         
-        if(x >= 211 && x <= 492 && y >= 92 && y <= 207) {
+        if(x >= 211 && x <= 492 && y >= 92 && y <= 207 && !GameCore.restartMenu) {
         	System.out.println(x+","+y);
         	GameCore.menuRunning = false;
+        }
+        if(x >= 350 && x <= 435 && y >= 276 && y <= 307 && !GameCore.restartMenu) {
+        	System.out.println(x+","+y);
+        	GameCore.lazilyExit();
+        }
+        
+        if(x >= 275 && x <= 525 && y >= 60 && y <= 159 && GameCore.restartMenu) {
+        	System.out.println(x+","+y);
+        	GameCore.menuRunning = false;
+        }
+        if(x >= 275 && x <= 525 && y >= 203 && y <= 301 && GameCore.restartMenu) {
+        	System.out.println(x+","+y);
+        	GameCore.lazilyExit();
         }
     }
 
