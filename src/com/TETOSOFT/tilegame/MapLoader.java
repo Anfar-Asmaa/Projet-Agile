@@ -274,6 +274,8 @@ public class MapLoader
                 loadImage("fly1.png"),
                 loadImage("fly2.png"),
                 loadImage("fly3.png"),
+                loadImage("fly4.png"),
+                loadImage("fly5.png"),
         };
 
         //initializing all images array
@@ -332,7 +334,7 @@ public class MapLoader
 
         for (int i=0; i<4; i++) 
         {
-            flyAnim[i] = createFlyAnim (flyImages[i][0], flyImages[i][1], flyImages[i][2]);
+            flyAnim[i] = createFlyAnim (flyImages[i]);
             grubAnim[i] = createGrubAnim (grubImages[i][0], grubImages[i][1], grubImages[i][2], grubImages[i][3]);
 
             playerWalkAnim[i] = createPlayerWalkAnim(playerImages[i]);
@@ -362,13 +364,12 @@ public class MapLoader
         return anim;
     }
 
-    private Animation createFlyAnim(Image img1, Image img2, Image img3)
+    private Animation createFlyAnim(Image[] flyImages)
     {
         Animation anim = new Animation();
-        anim.addFrame(img1, 50);
-        anim.addFrame(img2, 50);
-        anim.addFrame(img3, 50);
-        anim.addFrame(img2, 50);
+        for(int j = 0; j <5; j++)
+            anim.addFrame(flyImages[j], 150);
+
         return anim;
     }
 
