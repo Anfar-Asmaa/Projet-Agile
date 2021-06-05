@@ -33,7 +33,8 @@ public class MapLoader
         Creates a new ResourceManager with the specified
         GraphicsConfiguration.
     */
-    public MapLoader(GraphicsConfiguration gc) 
+    public MapLoader(){}
+    public MapLoader(GraphicsConfiguration gc)
     {
         this.gc = gc;
         loadTileImages();
