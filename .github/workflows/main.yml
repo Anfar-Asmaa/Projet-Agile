@@ -5,9 +5,7 @@ on:
     
 jobs:
   test:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
     - name: Set up JDK 8
@@ -15,6 +13,8 @@ jobs:
       with:
         java-version: '8'
         distribution: 'adopt'
+    - name: build with Maven
+      run: mvn -B build --file pom.xml
     - name: Test with Maven
       run: mvn -B test --file pom.xml
   build:
