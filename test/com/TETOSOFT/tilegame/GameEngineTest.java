@@ -1,13 +1,12 @@
 package com.TETOSOFT.tilegame;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import java.io.File;
 
-import static org.junit.Assert.*;
 
 public class GameEngineTest {
     private Clip jumpCoins,fail;
@@ -16,6 +15,8 @@ public class GameEngineTest {
 
     @Test
     public void soundsLoadingTest(){
+        System.out.println("Testing sounds loading...");
+
         try{
             File music_jumpCoin= new File("jump-coin.wav");
             AudioInputStream audioInput= AudioSystem.getAudioInputStream(music_jumpCoin);
@@ -27,8 +28,9 @@ public class GameEngineTest {
             fail = AudioSystem.getClip();
             fail.open(audioInput2);
         }catch (Exception e){
-
+            e.printStackTrace();
         }
+        System.out.println("Testing Sounds ends ...");
 
     }
 }
