@@ -9,12 +9,6 @@ import java.awt.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class InputManagerTest {
-    InputManager inputManager;
-
-    @BeforeEach
-    public  void init(){
-        this.inputManager = new InputManager(new Component() {});
-    }
 
     @Test
     void isRelativeMouseMode() {
