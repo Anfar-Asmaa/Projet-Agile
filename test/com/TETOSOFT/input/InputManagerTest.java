@@ -13,12 +13,12 @@ class InputManagerTest {
 
     @BeforeEach
     public  void init(){
-        inputManager = new InputManager(new Component() {});
+        this.inputManager = new InputManager(new Component() {});
     }
 
     @Test
     void isRelativeMouseMode() {
-        assertFalse( inputManager.isRelativeMouseMode());;
+        assertFalse( this.inputManager.isRelativeMouseMode());;
     }
 
 
@@ -26,12 +26,12 @@ class InputManagerTest {
 
     @Test
     void getMouseX() {
-        assertEquals(0 , inputManager.getMouseX());
+        assertEquals(0 , this.inputManager.getMouseX());
     }
 
     @Test
     void getMouseY() {
-        assertEquals(0 , inputManager.getMouseY());
+        assertEquals(0 , this.ginputManager.getMouseY());
 
     }
 }
