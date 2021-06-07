@@ -31,7 +31,7 @@ class InputManagerTest {
 
     @Test
     void getMouseY() {
-        assertEquals(0 , this.ginputManager.getMouseY());
+        assertEquals(0 , this.inputManager.getMouseY());
 
     }
 }
